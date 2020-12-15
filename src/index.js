@@ -9,11 +9,25 @@ const hardDifficulty = "https://opentdb.com/api.php?amount=10&category=31&diffic
 
 document.addEventListener('DOMContentLoaded', () => {
     chooseDifficulty()
+
+    let easyButtonClick = document.getElementById('button-easy')
+    easyButtonClick.addEventListener('click', () => {
+        console.log("easy!")
+    })
+
+    let mediumButtonClick = document.getElementById('button-medium')
+    mediumButtonClick.addEventListener('click', () => {
+        console.log("medium!")
+    })
+
+    let hardButtonClick = document.getElementById('button-hard')
+    hardButtonClick.addEventListener('click', () => {
+        console.log("hard!")
+    })
 })
 
-
 function chooseDifficulty(){
-    h1 = document.createElement("h1")
+    let h1 = document.createElement("h1")
     h1.innerText = "Welcome to OtakQ!"
     document.body.appendChild(h1)
 
@@ -21,17 +35,17 @@ function chooseDifficulty(){
 }
 
 function renderDifficultyButtons(){
-    div = document.createElement("div")
+    let div = document.createElement("div")
 
-    easyButton = document.createElement("button")
+    let easyButton = document.createElement("button")
     easyButton.innerText = "Easy"
     easyButton.id = "button-easy"
 
-    mediumButton = document.createElement("button")
+    let mediumButton = document.createElement("button")
     mediumButton.innerText = "Medium"
     mediumButton.id = "button-medium"
 
-    hardButton = document.createElement("button")
+    let hardButton = document.createElement("button")
     hardButton.innerText = "Hard"
     hardButton.id = "button-hard"
 
@@ -40,4 +54,8 @@ function renderDifficultyButtons(){
     div.appendChild(hardButton)
 
     document.body.appendChild(div)
+}
+
+function renderQuiz(){
+
 }
