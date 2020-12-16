@@ -64,7 +64,7 @@ function renderDifficultyButtons(){
         console.log("load easy quiz")
         fetch(easyDifficulty)
         .then(res => res.json())
-        .then(quiz => console.log(quiz))
+        .then(quiz => renderQuiz(quiz))
     })
 
     let mediumButtonClick = document.getElementById('button-medium')
@@ -72,7 +72,7 @@ function renderDifficultyButtons(){
         console.log("load medium quiz")
         fetch(mediumDifficulty)
         .then(res => res.json())
-        .then(quiz => console.log(quiz))
+        .then(quiz => renderQuiz(quiz))
     })
 
     let hardButtonClick = document.getElementById('button-hard')
@@ -80,7 +80,7 @@ function renderDifficultyButtons(){
         console.log("load hard quiz")
         fetch(hardDifficulty)
         .then(res => res.json())
-        .then(quiz => console.log(quiz))
+        .then(quiz => renderQuiz(quiz))
     })
 }
 
@@ -118,10 +118,6 @@ function renderLoginForm(){
 // let formSubmitButton = document.getElementById("submit-login")
 // formSubmitButton.addEventListener('click' () => 
 // console.log("submit button clicked"))
-
-function renderQuiz(){
-
-}
 
 function findOrCreateUser(username){
     fetch('http://localhost:3000/api/v1/players', 
@@ -169,6 +165,61 @@ function findOrCreateUser(username){
         }
     })
 }
+
+function renderQuiz(quizObj){
+
+    let difficultyButtons = document.getElementById("div-difficulty-buttons")
+    difficultyButtons.remove()
+
+    let div = document.createElement("div")
+    div.id = "div-quiz"
+
+    let ol = document.createElement("ol")
+    ol.id = "ol-quiz"
+
+    document.body.appendChild(div)
+    div.appendChild(ol)
+
+    quizObj.results.forEach(questionObj => {
+        let li = document.createElement("li")
+        li.innerHTML = questionObj.question
+        ol.appendChild(li)
+
+        let answersArr = [questionObj.correct_answer, ...questionObj.incorrect_answers].sort()
+        answersArr.forEach(e => {
+            let form = document.createElement("form")
+            // form.id = array index + 1
+
+            let input = document.createElement("input")
+            input.setAttribute("type", "radio")
+
+            let label = document.createElement("label")
+            label.innerHTML = e
+
+            form.appendChild(input)
+            form.appendChild(label)
+            ol.appendChild(form)
+        })
+        
+        let br = document.createElement("br")
+        ol.appendChild(br)
+        // render question answers within li
+    })
+}
+
+// {
+//     "response_code": 0,
+//     "results": 
+// [
+//     {
+//         "category": "Entertainment: Japanese Anime & Manga",
+//         "type": "boolean",
+//         "difficulty": "easy",
+//         "question": "Gosho Aoyama Made This Series: (Detective Conan \/ Case Closed!)",
+//         "correct_answer": "True",
+//         "incorrect_answers": ["False"]
+//     }
+// ]}
 
 // Working fetch POST method
 // fetch('http://localhost:3000/api/v1/players', 
