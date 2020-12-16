@@ -13,9 +13,6 @@ const hardDifficulty = "https://opentdb.com/api.php?amount=10&category=31&diffic
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Load login page
-    // Once 'logged in' run a find_or_create_by in the db with the username
-    // "Log in" the user then run 'chooseDifficulty' and store their user id
     // Make an API call for the question set for the difficulty chosen then render the quiz
     // Calculate and display score then run a fetch POST request to create a score associated with the user
     // Run chooseDifficulty again
@@ -66,6 +63,7 @@ function welcomeHeader(){
 
 function renderDifficultyButtons(){
     let div = document.createElement("div")
+    div.id = "div-difficulty-buttons"
 
     let easyButton = document.createElement("button")
     easyButton.innerText = "Easy"
@@ -140,6 +138,8 @@ function findOrCreateUser(username){
 
         if (obj.errors){
 
+            console.log("in error")
+
             let div = document.createElement("div")
             div.setAttribute("class", "div-errors")
             let errorList = document.createElement("ul")
@@ -156,8 +156,8 @@ function findOrCreateUser(username){
                 document.body.appendChild(div)
             })
         } else {
-            sessionStorage.setItem("userId", obj.id)
-            sessionStorage.setItem("username", obj.name)
+            sessionStorage.setItem("userId", obj.data.id)
+            sessionStorage.setItem("username", obj.data.attributes.name)
 
             console.log(sessionStorage.userId)
             console.log(sessionStorage.username)
