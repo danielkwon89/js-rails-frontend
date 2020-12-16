@@ -21,30 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderLoginForm()
 
-    // let easyButtonClick = document.getElementById('button-easy')
-    // easyButtonClick.addEventListener('click', () => {
-    //     console.log("easy!")
-    //     fetch(easyDifficulty)
-    //     .then(res => res.json())
-    //     .then(quiz => console.log(quiz))
-    // })
-
-    // let mediumButtonClick = document.getElementById('button-medium')
-    // mediumButtonClick.addEventListener('click', () => {
-    //     console.log("medium!")
-    //     fetch(mediumDifficulty)
-    //     .then(res => res.json())
-    //     .then(quiz => console.log(quiz))
-    // })
-
-    // let hardButtonClick = document.getElementById('button-hard')
-    // hardButtonClick.addEventListener('click', () => {
-    //     console.log("hard!")
-    //     fetch(hardDifficulty)
-    //     .then(res => res.json())
-    //     .then(quiz => console.log(quiz))
-    // })
-
     let formSubmitButton = document.getElementById("submit-login")
     formSubmitButton.addEventListener('click', (e) => {
         e.preventDefault()
@@ -82,6 +58,30 @@ function renderDifficultyButtons(){
     div.appendChild(hardButton)
 
     document.body.appendChild(div)
+
+    let easyButtonClick = document.getElementById('button-easy')
+    easyButtonClick.addEventListener('click', () => {
+        console.log("load easy quiz")
+        fetch(easyDifficulty)
+        .then(res => res.json())
+        .then(quiz => console.log(quiz))
+    })
+
+    let mediumButtonClick = document.getElementById('button-medium')
+    mediumButtonClick.addEventListener('click', () => {
+        console.log("load medium quiz")
+        fetch(mediumDifficulty)
+        .then(res => res.json())
+        .then(quiz => console.log(quiz))
+    })
+
+    let hardButtonClick = document.getElementById('button-hard')
+    hardButtonClick.addEventListener('click', () => {
+        console.log("load hard quiz")
+        fetch(hardDifficulty)
+        .then(res => res.json())
+        .then(quiz => console.log(quiz))
+    })
 }
 
 function renderLoginForm(){
