@@ -327,28 +327,27 @@ function renderLeaderboard(){
             
         })
 
-        easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+        easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
             let li = document.createElement("li")
             li.innerHTML = `${e.name}: ${e.score}/10`
             let easyList = document.getElementById("easy-leaderboard-ol")
             easyList.appendChild(li)
         })
 
-        mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+        mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
             let li = document.createElement("li")
             li.innerHTML = `${e.name}: ${e.score}/10`
             let mediumList = document.getElementById("medium-leaderboard-ol")
             mediumList.appendChild(li)
         })
 
-        hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+        hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
             let li = document.createElement("li")
             li.innerHTML = `${e.name}: ${e.score}/10`
             let hardList = document.getElementById("hard-leaderboard-ol")
             hardList.appendChild(li)
         })
 
-        // limit leaderboard to top 25
         // add timer functionality and sort scores by score first then lowest time elapsed
     })
 }
