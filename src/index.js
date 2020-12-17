@@ -268,18 +268,88 @@ function renderQuizResults(score){
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify({score: {score_value: score, player_id: sessionStorage.userId, quizDifficulty: sessionStorage.quizDifficulty
         }})
-    })
+    }).then(() => renderLeaderboard())
 
-    renderLeaderboard()
+    // renderLeaderboard()
 }
 
 function renderLeaderboard(){
-    fetch("http://localhost:3000/api/v1/players")
+
+    // create leaderboard divs/ol by difficulty
+
+    let easyLeaderboard = document.createElement("div")
+    easyLeaderboard.id = "easy-leaderboard-div"
+    let easyOl = document.createElement("ol")
+    easyOl.id = "easy-leaderboard-ol"
+    let easyH3 = document.createElement("h3")
+    easyH3.innerHTML = "Easy Quiz Leaderboard:"
+    easyLeaderboard.appendChild(easyH3)
+    easyLeaderboard.appendChild(easyOl)
+    document.body.appendChild(easyLeaderboard)
+
+    let mediumLeaderboard = document.createElement("div")
+    mediumLeaderboard.id = "medium-leaderboard-div"
+    let mediumOl = document.createElement("ol")
+    mediumOl.id = "medium-leaderboard-ol"
+    let mediumH3 = document.createElement("h3")
+    mediumH3.innerHTML = "Medium Quiz Leaderboard:"
+    mediumLeaderboard.appendChild(mediumH3)
+    mediumLeaderboard.appendChild(mediumOl)
+    document.body.appendChild(mediumLeaderboard)
+    
+    let hardLeaderboard = document.createElement("div")
+    hardLeaderboard.id = "hard-leaderboard-div"
+    let hardOl = document.createElement("ol")
+    hardOl.id = "hard-leaderboard-ol"
+    let hardH3 = document.createElement("h3")
+    hardH3.innerHTML = "Hard Quiz Leaderboard:"
+    hardLeaderboard.appendChild(hardH3)
+    hardLeaderboard.appendChild(hardOl)
+    document.body.appendChild(hardLeaderboard)
+
+    let easyArr = []
+    let mediumArr = []
+    let hardArr = []
+
+    fetch("http://localhost:3000/api/v1/scores")
     .then(res => res.json())
     .then(data => {
-        console.log(data)
+        data.data.forEach(e => {
+            console.log(e.attributes.name)
+            // console.log(e.attributes.quizDifficulty)
 
-        // create leaderboards by difficulty
+            if (e.attributes.quizDifficulty === "easy"){
+                easyArr.push({name: e.attributes.player.name, score: e.attributes.score_value})
+            } else if (e.attributes.quizDifficulty === "medium"){
+                mediumArr.push({name: e.attributes.player.name, score: e.attributes.score_value})
+            } else if (e.attributes.quizDifficulty === "hard"){
+                hardArr.push({name: e.attributes.player.name, score: e.attributes.score_value})
+            }
+            
+        })
+
+        easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+            let li = document.createElement("li")
+            li.innerHTML = `${e.name}: ${e.score}`
+            let easyList = document.getElementById("easy-leaderboard-ol")
+            easyList.appendChild(li)
+        })
+
+        mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+            let li = document.createElement("li")
+            li.innerHTML = `${e.name}: ${e.score}`
+            let mediumList = document.getElementById("medium-leaderboard-ol")
+            mediumList.appendChild(li)
+        })
+
+        hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).forEach(e => {
+            let li = document.createElement("li")
+            li.innerHTML = `${e.name}: ${e.score}`
+            let hardList = document.getElementById("hard-leaderboard-ol")
+            hardList.appendChild(li)
+        })
+
+        // create li elements for each score and append
     })
 }
 
