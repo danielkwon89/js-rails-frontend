@@ -316,7 +316,6 @@ function renderLeaderboard(){
     .then(data => {
         data.data.forEach(e => {
             console.log(e.attributes.name)
-            // console.log(e.attributes.quizDifficulty)
 
             if (e.attributes.quizDifficulty === "easy"){
                 easyArr.push({name: e.attributes.player.name, score: e.attributes.score_value})
@@ -353,24 +352,3 @@ function renderLeaderboard(){
         // add timer functionality and sort scores by score first then lowest time elapsed
     })
 }
-
-// {
-//     "response_code": 0,
-//     "results": 
-// [
-//     {
-//         "category": "Entertainment: Japanese Anime & Manga",
-//         "type": "boolean",
-//         "difficulty": "easy",
-//         "question": "Gosho Aoyama Made This Series: (Detective Conan \/ Case Closed!)",
-//         "correct_answer": "True",
-//         "incorrect_answers": ["False"]
-//     }
-// ]}
-
-// Working fetch POST method
-// fetch('http://localhost:3000/api/v1/players', 
-// {method: 'POST',
-// headers: {'Content-Type': 'application/json'}, 
-// body: JSON.stringify({player: {name: "Jennifer"}})
-// })
