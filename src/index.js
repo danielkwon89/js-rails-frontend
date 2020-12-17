@@ -61,7 +61,8 @@ function renderDifficultyButtons(){
 
     let easyButtonClick = document.getElementById('button-easy')
     easyButtonClick.addEventListener('click', () => {
-        console.log("load easy quiz")
+        sessionStorage.setItem("quizDifficulty", "easy")
+        console.log(sessionStorage.quizDifficulty)
         fetch(easyDifficulty)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
@@ -69,7 +70,8 @@ function renderDifficultyButtons(){
 
     let mediumButtonClick = document.getElementById('button-medium')
     mediumButtonClick.addEventListener('click', () => {
-        console.log("load medium quiz")
+        sessionStorage.setItem("quizDifficulty", "medium")
+        console.log(sessionStorage.quizDifficulty)
         fetch(mediumDifficulty)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
@@ -77,7 +79,8 @@ function renderDifficultyButtons(){
 
     let hardButtonClick = document.getElementById('button-hard')
     hardButtonClick.addEventListener('click', () => {
-        console.log("load hard quiz")
+        sessionStorage.setItem("quizDifficulty", "hard")
+        console.log(sessionStorage.quizDifficulty)
         fetch(hardDifficulty)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
@@ -134,8 +137,6 @@ function findOrCreateUser(username){
 
         if (obj.errors){
 
-            console.log("in error")
-
             let div = document.createElement("div")
             div.setAttribute("class", "div-errors")
             let errorList = document.createElement("ul")
@@ -152,6 +153,7 @@ function findOrCreateUser(username){
                 document.body.appendChild(div)
             })
         } else {
+
             sessionStorage.setItem("userId", obj.data.id)
             sessionStorage.setItem("username", obj.data.attributes.name)
 
@@ -180,30 +182,104 @@ function renderQuiz(quizObj){
     document.body.appendChild(div)
     div.appendChild(ol)
 
+    let actualAnswers = []
+
     quizObj.results.forEach(questionObj => {
         let li = document.createElement("li")
         li.innerHTML = questionObj.question
         ol.appendChild(li)
 
+        let p = document.createElement("p")
+        p.innerHTML = questionObj.correct_answer
+        actualAnswers.push(p.innerHTML)
+
         let answersArr = [questionObj.correct_answer, ...questionObj.incorrect_answers].sort()
         answersArr.forEach(e => {
-            let form = document.createElement("form")
+            // let form = document.createElement("form")
             // form.id = array index + 1
 
             let input = document.createElement("input")
             input.setAttribute("type", "radio")
+            input.setAttribute("name", quizObj.results.indexOf(questionObj))
+            input.setAttribute("value", e)
 
             let label = document.createElement("label")
             label.innerHTML = e
 
-            form.appendChild(input)
-            form.appendChild(label)
-            ol.appendChild(form)
+            // form.appendChild(input)
+            // form.appendChild(label)
+            // ol.appendChild(form)
+
+            let br = document.createElement("br")
+
+            ol.appendChild(input)
+            ol.appendChild(label)
+            ol.appendChild(br)
         })
         
         let br = document.createElement("br")
         ol.appendChild(br)
-        // render question answers within li
+    })
+    
+    let submitButton = document.createElement("button")
+    submitButton.setAttribute("type", "submit")
+    submitButton.innerHTML = "Submit"
+    div.appendChild(submitButton)
+
+    submitButton.addEventListener("click", (e) => {
+        e.preventDefault
+
+        let submittedAnswers = []
+        
+        for (let i = 0; i < quizObj.results.length; i++){
+            document.getElementsByName(i).forEach(e => {
+                if (e.checked){
+                    submittedAnswers.push(e.value)
+                    // console.log(submittedAnswers)
+                    // console.log(actualAnswers)
+                }
+            })
+        }
+
+        let correctScore = 0
+
+        submittedAnswers.forEach(e => {
+            if (e === actualAnswers[submittedAnswers.indexOf(e)]){
+                correctScore += 1
+            }
+        })
+
+        console.log(correctScore)
+        renderQuizResults(correctScore)
+    })
+}
+
+function renderQuizResults(score){
+    let quizDiv = document.getElementById("div-quiz")
+    quizDiv.remove()
+
+    let h2 = document.createElement("h2")
+    h2.innerHTML = `Your Score: ${score}/10`
+    document.body.appendChild(h2)
+
+    fetch('http://localhost:3000/api/v1/scores', 
+    {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({score: {score_value: score, player_id: sessionStorage.userId, quizDifficulty: sessionStorage.quizDifficulty
+        }})
+    })
+
+    renderLeaderboard()
+}
+
+function renderLeaderboard(){
+    fetch("http://localhost:3000/api/v1/players")
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+
+        // create leaderboards by difficulty
     })
 }
 
