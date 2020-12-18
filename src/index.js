@@ -315,7 +315,6 @@ function renderLeaderboard(){
     .then(res => res.json())
     .then(data => {
         data.data.forEach(e => {
-            console.log(e.attributes.name)
 
             if (e.attributes.quizDifficulty === "easy"){
                 easyArr.push({name: e.attributes.player.name, score: e.attributes.score_value})
@@ -348,6 +347,34 @@ function renderLeaderboard(){
             hardList.appendChild(li)
         })
 
+        // add button with click eventlistener which clears page (function) then renders difficulty buttons
+
+        let retakeQuizButton = document.createElement("button")
+        retakeQuizButton.id = "retake-quiz-button"
+        retakeQuizButton.innerHTML = "Retake Quiz"
+        document.body.appendChild(retakeQuizButton)
+
+        retakeQuizButton.addEventListener("click", () => {
+            clearPage()
+            renderDifficultyButtons()
+        })
+
+        // renderDifficultyButtons()
+
+        // create button to get back to choose quiz difficulty page
         // add timer functionality and sort scores by score first then lowest time elapsed
     })
+
+    // clearPage()
+}
+
+function clearPage(){
+    let divs = document.body.getElementsByTagName("div")
+    Array.from(divs).forEach(e => e.remove())
+    let h1s = document.body.getElementsByTagName("h1")
+    Array.from(h1s).forEach(e => e.remove())
+    let h2s = document.body.getElementsByTagName("h2")
+    Array.from(h2s).forEach(e => e.remove())
+    let buttons = document.body.getElementsByTagName("button")
+    Array.from(buttons).forEach(e => e.remove())
 }
