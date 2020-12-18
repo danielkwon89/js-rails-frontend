@@ -1,21 +1,13 @@
-// Quiz-A-Boo
-// OtakQ
+// Possible App Names: Quiz-A-Boo Or OtakQ
 
-// Anime Quiz API Endpoints:
-const mixedDifficulty = "https://opentdb.com/api.php?amount=10&category=31"
-const easyDifficulty = "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy"
-const mediumDifficulty = "https://opentdb.com/api.php?amount=10&category=31&difficulty=medium"
-const hardDifficulty = "https://opentdb.com/api.php?amount=10&category=31&difficulty=hard"
+const easyQuiz = "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy"
+const mediumQuiz = "https://opentdb.com/api.php?amount=10&category=31&difficulty=medium"
+const hardQuiz = "https://opentdb.com/api.php?amount=10&category=31&difficulty=hard"
 
-// Rails API Endpoints:
-// const players =
-// const scores =
+const playersEndpoint = "http://localhost:3000/api/v1/players"
+const scoresEndpoint = "http://localhost:3000/api/v1/scores"
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Make an API call for the question set for the difficulty chosen then render the quiz
-    // Calculate and display score then run a fetch POST request to create a score associated with the user
-    // Run chooseDifficulty again
 
     welcomeHeader()
 
@@ -28,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         findOrCreateUser(userInput.value)
     })
 })
-
-//
 
 function welcomeHeader(){
     let h1 = document.createElement("h1")
@@ -63,7 +53,7 @@ function renderDifficultyButtons(){
     easyButtonClick.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "easy")
         console.log(sessionStorage.quizDifficulty)
-        fetch(easyDifficulty)
+        fetch(easyQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
     })
@@ -72,7 +62,7 @@ function renderDifficultyButtons(){
     mediumButtonClick.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "medium")
         console.log(sessionStorage.quizDifficulty)
-        fetch(mediumDifficulty)
+        fetch(mediumQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
     })
@@ -81,7 +71,7 @@ function renderDifficultyButtons(){
     hardButtonClick.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "hard")
         console.log(sessionStorage.quizDifficulty)
-        fetch(hardDifficulty)
+        fetch(hardQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
     })
@@ -123,7 +113,7 @@ function renderLoginForm(){
 // console.log("submit button clicked"))
 
 function findOrCreateUser(username){
-    fetch('http://localhost:3000/api/v1/players', 
+    fetch(playersEndpoint, 
     {
         method: 'POST',
         headers: {'Content-Type': 'application/json'}, 
@@ -262,7 +252,7 @@ function renderQuizResults(score){
     h2.innerHTML = `Your Score: ${score}/10`
     document.body.appendChild(h2)
 
-    fetch('http://localhost:3000/api/v1/scores', 
+    fetch(scoresEndpoint, 
     {
         method: 'POST',
         headers: {'Content-Type': 'application/json'}, 
@@ -270,12 +260,9 @@ function renderQuizResults(score){
         }})
     }).then(() => renderLeaderboard())
 
-    // renderLeaderboard()
 }
 
 function renderLeaderboard(){
-
-    // create leaderboard divs/ol by difficulty
 
     let easyLeaderboard = document.createElement("div")
     easyLeaderboard.id = "easy-leaderboard-div"
@@ -371,8 +358,8 @@ function renderLeaderboard(){
 function clearPage(){
     let divs = document.body.getElementsByTagName("div")
     Array.from(divs).forEach(e => e.remove())
-    let h1s = document.body.getElementsByTagName("h1")
-    Array.from(h1s).forEach(e => e.remove())
+    // let h1s = document.body.getElementsByTagName("h1")
+    // Array.from(h1s).forEach(e => e.remove())
     let h2s = document.body.getElementsByTagName("h2")
     Array.from(h2s).forEach(e => e.remove())
     let buttons = document.body.getElementsByTagName("button")
