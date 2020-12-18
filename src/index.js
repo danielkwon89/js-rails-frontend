@@ -9,39 +9,24 @@ const scoresEndpoint = "http://localhost:3000/api/v1/scores"
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    welcomeHeader()
-
     renderLoginForm()
-
-    let formSubmitButton = document.getElementById("submit-login")
-    formSubmitButton.addEventListener('click', (e) => {
-        e.preventDefault()
-        let userInput = document.getElementById("input-login")
-        findOrCreateUser(userInput.value)
-    })
 })
 
 function welcomeHeader(){
-    let h1 = document.createElement("h1")
-    h1.innerText = "Welcome to OtakQ!"
+
+    let h1 = createCustomElement("h1", "h1-welcome", "Welcome to OtakQ!")
     document.body.appendChild(h1)
 }
 
 function renderDifficultyButtons(){
-    let div = document.createElement("div")
-    div.id = "div-difficulty-buttons"
 
-    let easyButton = document.createElement("button")
-    easyButton.innerText = "Easy"
-    easyButton.id = "button-easy"
+    let div = createCustomElement("div", "div-difficulty-buttons")
 
-    let mediumButton = document.createElement("button")
-    mediumButton.innerText = "Medium"
-    mediumButton.id = "button-medium"
+    let easyButton = createCustomElement("button", "button-easy", "Easy Quiz")
 
-    let hardButton = document.createElement("button")
-    hardButton.innerText = "Hard"
-    hardButton.id = "button-hard"
+    let mediumButton = createCustomElement("button", "button-medium", "Medium Quiz")
+
+    let hardButton = createCustomElement("button", "button-hard", "Hard Quiz")
 
     div.appendChild(easyButton) 
     div.appendChild(mediumButton)
@@ -49,28 +34,22 @@ function renderDifficultyButtons(){
 
     document.body.appendChild(div)
 
-    let easyButtonClick = document.getElementById('button-easy')
-    easyButtonClick.addEventListener('click', () => {
+    easyButton.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "easy")
-        console.log(sessionStorage.quizDifficulty)
         fetch(easyQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
     })
 
-    let mediumButtonClick = document.getElementById('button-medium')
-    mediumButtonClick.addEventListener('click', () => {
+    mediumButton.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "medium")
-        console.log(sessionStorage.quizDifficulty)
         fetch(mediumQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
     })
 
-    let hardButtonClick = document.getElementById('button-hard')
-    hardButtonClick.addEventListener('click', () => {
+    hardButton.addEventListener('click', () => {
         sessionStorage.setItem("quizDifficulty", "hard")
-        console.log(sessionStorage.quizDifficulty)
         fetch(hardQuiz)
         .then(res => res.json())
         .then(quiz => renderQuiz(quiz))
@@ -78,22 +57,19 @@ function renderDifficultyButtons(){
 }
 
 function renderLoginForm(){
-    let div = document.createElement("div")
-    div.id = "div-login"
-    
-    let form = document.createElement("form")
-    form.id = "form-login"
 
-    let label = document.createElement("label")
-    label.id = "label-login"
-    label.innerText = "Login to Take Quiz:"
+    welcomeHeader()
 
-    let input = document.createElement("input")
-    input.id = "input-login"
+    let div = createCustomElement("div", "div-login")
+
+    let form = createCustomElement("form", "form-login")
+
+    let label = createCustomElement("label", "label-login", "Login to Take Quiz")
+
+    let input = createCustomElement("input", "input-login")
     input.setAttribute("placeholder", "username")
 
-    let submit = document.createElement("input")
-    submit.id = "submit-login"
+    let submit = createCustomElement("button", "submit-login", "Submit")
     submit.setAttribute("type", "submit")
 
     let br1 = document.createElement("br")
@@ -106,11 +82,13 @@ function renderLoginForm(){
     form.appendChild(input)
     form.appendChild(br2)
     form.appendChild(submit)
-}
 
-// let formSubmitButton = document.getElementById("submit-login")
-// formSubmitButton.addEventListener('click' () => 
-// console.log("submit button clicked"))
+    let formSubmitButton = document.getElementById("submit-login")
+    formSubmitButton.addEventListener('click', (e) => {
+        e.preventDefault()
+        findOrCreateUser(input.value)
+    })
+}
 
 function findOrCreateUser(username){
     fetch(playersEndpoint, 
@@ -123,32 +101,31 @@ function findOrCreateUser(username){
     .then(obj => {
 
         let errors = document.getElementsByClassName("div-errors")
+
         Array.from(errors).forEach(e => e.remove())
 
         if (obj.errors){
 
             let div = document.createElement("div")
             div.setAttribute("class", "div-errors")
-            let errorList = document.createElement("ul")
-            errorList.id = "ul-errors"
+
+            let errorList = createCustomElement("ul", "ul-errors")
 
             div.appendChild(errorList)
             
             obj.errors.forEach(msg => {
-                let errorMsg = document.createElement("li")
-                errorMsg.innerText = msg
+
+                let errorMsg = createCustomElement("li", "li-error-message", msg)
                 
                 errorList.appendChild(errorMsg)
 
                 document.body.appendChild(div)
             })
+
         } else {
 
             sessionStorage.setItem("userId", obj.data.id)
             sessionStorage.setItem("username", obj.data.attributes.name)
-
-            console.log(sessionStorage.userId)
-            console.log(sessionStorage.username)
 
             let loginPage = document.getElementById("div-login")
             loginPage.remove()
@@ -163,11 +140,9 @@ function renderQuiz(quizObj){
     let difficultyButtons = document.getElementById("div-difficulty-buttons")
     difficultyButtons.remove()
 
-    let div = document.createElement("div")
-    div.id = "div-quiz"
+    let div = createCustomElement("div", "div-quiz")
 
-    let ol = document.createElement("ol")
-    ol.id = "ol-quiz"
+    let ol = createCustomElement("ol", "ol-quiz")
 
     document.body.appendChild(div)
     div.appendChild(ol)
@@ -175,30 +150,22 @@ function renderQuiz(quizObj){
     let actualAnswers = []
 
     quizObj.results.forEach(questionObj => {
-        let li = document.createElement("li")
-        li.innerHTML = questionObj.question
-        ol.appendChild(li)
 
-        let p = document.createElement("p")
-        p.innerHTML = questionObj.correct_answer
+        let li = createCustomElement("li", "li-question", questionObj.question)
+        ol.appendChild(li)
+        
+        let p = createCustomElement("p", "p-correct-answer", questionObj.correct_answer)
         actualAnswers.push(p.innerHTML)
 
         let answersArr = [questionObj.correct_answer, ...questionObj.incorrect_answers].sort()
         answersArr.forEach(e => {
-            // let form = document.createElement("form")
-            // form.id = array index + 1
 
             let input = document.createElement("input")
             input.setAttribute("type", "radio")
             input.setAttribute("name", quizObj.results.indexOf(questionObj))
             input.setAttribute("value", e)
 
-            let label = document.createElement("label")
-            label.innerHTML = e
-
-            // form.appendChild(input)
-            // form.appendChild(label)
-            // ol.appendChild(form)
+            let label = createCustomElement("label", "label-answer-choice", e)
 
             let br = document.createElement("br")
 
@@ -211,13 +178,12 @@ function renderQuiz(quizObj){
         ol.appendChild(br)
     })
     
-    let submitButton = document.createElement("button")
+    let submitButton = createCustomElement("button", "button-submit", "Submit")
     submitButton.setAttribute("type", "submit")
-    submitButton.innerHTML = "Submit"
     div.appendChild(submitButton)
 
     submitButton.addEventListener("click", (e) => {
-        e.preventDefault
+        e.preventDefault()
 
         let submittedAnswers = []
         
@@ -225,8 +191,6 @@ function renderQuiz(quizObj){
             document.getElementsByName(i).forEach(e => {
                 if (e.checked){
                     submittedAnswers.push(e.value)
-                    // console.log(submittedAnswers)
-                    // console.log(actualAnswers)
                 }
             })
         }
@@ -239,7 +203,6 @@ function renderQuiz(quizObj){
             }
         })
 
-        console.log(correctScore)
         renderQuizResults(correctScore)
     })
 }
@@ -248,8 +211,7 @@ function renderQuizResults(score){
     let quizDiv = document.getElementById("div-quiz")
     quizDiv.remove()
 
-    let h2 = document.createElement("h2")
-    h2.innerHTML = `Your Score: ${score}/10`
+    let h2 = createCustomElement("h2", "h2-quiz-results", `Your Score: ${score}/10`)
     document.body.appendChild(h2)
 
     fetch(scoresEndpoint, 
@@ -264,41 +226,35 @@ function renderQuizResults(score){
 
 function renderLeaderboard(){
 
-    let easyLeaderboard = document.createElement("div")
-    easyLeaderboard.id = "easy-leaderboard-div"
-    let easyOl = document.createElement("ol")
-    easyOl.id = "easy-leaderboard-ol"
-    let easyH3 = document.createElement("h3")
-    easyH3.innerHTML = "Easy Quiz Leaderboard:"
-    easyLeaderboard.appendChild(easyH3)
-    easyLeaderboard.appendChild(easyOl)
-    document.body.appendChild(easyLeaderboard)
-
-    let mediumLeaderboard = document.createElement("div")
-    mediumLeaderboard.id = "medium-leaderboard-div"
-    let mediumOl = document.createElement("ol")
-    mediumOl.id = "medium-leaderboard-ol"
-    let mediumH3 = document.createElement("h3")
-    mediumH3.innerHTML = "Medium Quiz Leaderboard:"
-    mediumLeaderboard.appendChild(mediumH3)
-    mediumLeaderboard.appendChild(mediumOl)
-    document.body.appendChild(mediumLeaderboard)
+    let easyDiv = createCustomElement("div", "div-easy-leaderboard")
+    let easyOl = createCustomElement("ol", "ol-easy-leaderboard")
+    let easyH3 = createCustomElement("h3", "h3-easy-leaderboard", "Easy Quiz Leaderboard:")
     
-    let hardLeaderboard = document.createElement("div")
-    hardLeaderboard.id = "hard-leaderboard-div"
-    let hardOl = document.createElement("ol")
-    hardOl.id = "hard-leaderboard-ol"
-    let hardH3 = document.createElement("h3")
-    hardH3.innerHTML = "Hard Quiz Leaderboard:"
-    hardLeaderboard.appendChild(hardH3)
-    hardLeaderboard.appendChild(hardOl)
-    document.body.appendChild(hardLeaderboard)
+    easyDiv.appendChild(easyH3)
+    easyDiv.appendChild(easyOl)
+    document.body.appendChild(easyDiv)
+
+    let mediumDiv = createCustomElement("div", "div-medium-leaderboard")
+    let mediumOl = createCustomElement("ol", "ol-medium-leaderboard")
+    let mediumH3 = createCustomElement("h3", "h3-medium-leaderboard", "Medium Quiz Leaderboard:")
+
+    mediumDiv.appendChild(mediumH3)
+    mediumDiv.appendChild(mediumOl)
+    document.body.appendChild(mediumDiv)
+    
+    let hardDiv = createCustomElement("div", "div-hard-leaderboard")
+    let hardOl = createCustomElement("ol", "ol-hard-leaderboard")
+    let hardH3 = createCustomElement("h3", "h3-hard-leaderboard", "Hard Quiz Leaderboard:")
+
+    hardDiv.appendChild(hardH3)
+    hardDiv.appendChild(hardOl)
+    document.body.appendChild(hardDiv)
 
     let easyArr = []
     let mediumArr = []
     let hardArr = []
 
-    fetch("http://localhost:3000/api/v1/scores")
+    fetch(scoresEndpoint)
     .then(res => res.json())
     .then(data => {
         data.data.forEach(e => {
@@ -314,54 +270,56 @@ function renderLeaderboard(){
         })
 
         easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
-            let li = document.createElement("li")
-            li.innerHTML = `${e.name}: ${e.score}/10`
-            let easyList = document.getElementById("easy-leaderboard-ol")
+            let easyList = document.getElementById("ol-easy-leaderboard")
+            let li = createCustomElement("li", "li-easy-score", `${e.name}: ${e.score}/10`)
             easyList.appendChild(li)
         })
 
         mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
-            let li = document.createElement("li")
-            li.innerHTML = `${e.name}: ${e.score}/10`
-            let mediumList = document.getElementById("medium-leaderboard-ol")
+            let mediumList = document.getElementById("ol-medium-leaderboard")
+            let li = createCustomElement("li", "li-medium-score", `${e.name}: ${e.score}/10`)
             mediumList.appendChild(li)
         })
 
         hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
-            let li = document.createElement("li")
-            li.innerHTML = `${e.name}: ${e.score}/10`
-            let hardList = document.getElementById("hard-leaderboard-ol")
+            let hardList = document.getElementById("ol-hard-leaderboard")
+            let li = createCustomElement("li", "li-hard-score", `${e.name}: ${e.score}/10`)
             hardList.appendChild(li)
         })
 
-        // add button with click eventlistener which clears page (function) then renders difficulty buttons
-
-        let retakeQuizButton = document.createElement("button")
-        retakeQuizButton.id = "retake-quiz-button"
-        retakeQuizButton.innerHTML = "Retake Quiz"
-        document.body.appendChild(retakeQuizButton)
-
-        retakeQuizButton.addEventListener("click", () => {
-            clearPage()
-            renderDifficultyButtons()
-        })
-
-        // renderDifficultyButtons()
-
-        // create button to get back to choose quiz difficulty page
-        // add timer functionality and sort scores by score first then lowest time elapsed
+        renderRetakeQuizButton()
     })
 
-    // clearPage()
 }
 
 function clearPage(){
     let divs = document.body.getElementsByTagName("div")
     Array.from(divs).forEach(e => e.remove())
+
     // let h1s = document.body.getElementsByTagName("h1")
     // Array.from(h1s).forEach(e => e.remove())
+
     let h2s = document.body.getElementsByTagName("h2")
     Array.from(h2s).forEach(e => e.remove())
+
     let buttons = document.body.getElementsByTagName("button")
     Array.from(buttons).forEach(e => e.remove())
+}
+
+function renderRetakeQuizButton(){
+
+    let retakeQuizButton = createCustomElement("button", "button-retake-quiz", "Retake Quiz")
+    document.body.appendChild(retakeQuizButton)
+
+    retakeQuizButton.addEventListener("click", () => {
+        clearPage()
+        renderDifficultyButtons()
+    })
+}
+
+function createCustomElement(tagName, tagId = "", innerHTML = ""){
+    let element = document.createElement(tagName)
+    if (tagId) element.id = tagId
+    if (innerHTML) element.innerHTML = innerHTML
+    return element
 }
