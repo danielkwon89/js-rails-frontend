@@ -137,6 +137,10 @@ function findOrCreateUser(username){
 
 function renderQuiz(quizObj){
 
+    //
+    console.log(quizObj)
+    //
+  
     let difficultyButtons = document.getElementById("div-difficulty-buttons")
     difficultyButtons.remove()
 
@@ -151,13 +155,15 @@ function renderQuiz(quizObj){
 
     quizObj.results.forEach(questionObj => {
 
-        let li = createCustomElement("li", "li-question", questionObj.question)
+        let question = new Question(questionObj.question, questionObj.correct_answer, questionObj.incorrect_answers)
+
+        let li = createCustomElement("li", "li-question", question.question)
         ol.appendChild(li)
         
-        let p = createCustomElement("p", "p-correct-answer", questionObj.correct_answer)
+        let p = createCustomElement("p", "p-correct-answer", question.correctAnswer)
         actualAnswers.push(p.innerHTML)
 
-        let answersArr = [questionObj.correct_answer, ...questionObj.incorrect_answers].sort()
+        let answersArr = [question.correctAnswer, ...question.incorrectAnswers].sort()
         answersArr.forEach(e => {
 
             let input = document.createElement("input")
