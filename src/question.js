@@ -17,5 +17,3 @@ class Question {
         return this.incorrectAnswers
     }
 }
-
-// Should I create Quiz and Leaderboard classes? What other classes can I create?

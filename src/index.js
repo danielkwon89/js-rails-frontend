@@ -1,4 +1,4 @@
-// Possible App Names: Quiz-A-Boo Or OtakQ
+// Quiz-A-Boo
 
 const easyQuiz = "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy"
 const mediumQuiz = "https://opentdb.com/api.php?amount=10&category=31&difficulty=medium"
@@ -12,10 +12,41 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLoginForm()
 })
 
-function welcomeHeader(){
+function quizABooHeader(){
 
-    let h1 = createCustomElement("h1", "h1-welcome", "Welcome to OtakQ!")
-    document.body.appendChild(h1)
+    let img = document.createElement("img")
+    img.src = "img/quiz-a-boo.png"
+    img.id = "img-header"
+    document.body.appendChild(img)
+
+    // set background color to #fffcf2 (same as header background)
+}
+
+function renderDifficultyHeader(){
+    
+    // control flow grabbing difficulty level from sessionStorage.quizDifficulty then
+    // rendering the appropriate difficulty header
+
+    let quizDifficulty = sessionStorage.quizDifficulty
+    
+    if (quizDifficulty === "easy"){
+        let img = document.createElement("img")
+        img.src = "img/easy-quiz.png"
+        img.id = "img-header"
+        document.body.appendChild(img)
+    } else if (quizDifficulty === "medium"){
+        let img = document.createElement("img")
+        img.src = "img/medium-quiz.png"
+        img.id = "img-header"
+        document.body.appendChild(img)
+    } else if (quizDifficulty === "hard"){
+        let img = document.createElement("img")
+        img.src = "img/difficult-quiz.png"
+        img.id = "img-header"
+        document.body.appendChild(img)
+    }
+
+    // set background color to #fffcf2 (same as header background)
 }
 
 function renderDifficultyButtons(){
@@ -58,7 +89,7 @@ function renderDifficultyButtons(){
 
 function renderLoginForm(){
 
-    welcomeHeader()
+    quizABooHeader()
 
     let div = createCustomElement("div", "div-login")
 
@@ -143,6 +174,11 @@ function renderQuiz(quizObj){
   
     let difficultyButtons = document.getElementById("div-difficulty-buttons")
     difficultyButtons.remove()
+    let quizABooHeader = document.getElementById("img-header")
+    quizABooHeader.remove()
+
+    // render header based on difficulty
+    renderDifficultyHeader()
 
     let div = createCustomElement("div", "div-quiz")
 
@@ -216,6 +252,13 @@ function renderQuiz(quizObj){
 function renderQuizResults(score){
     let quizDiv = document.getElementById("div-quiz")
     quizDiv.remove()
+    let quizABooHeader = document.getElementById("img-header")
+    quizABooHeader.remove()
+
+    let thankYouForPlayingHeader = document.createElement("img")
+    thankYouForPlayingHeader.src = "img/thank-you-for-playing.png"
+    thankYouForPlayingHeader.id = "img-header"
+    document.body.appendChild(thankYouForPlayingHeader)
 
     let h2 = createCustomElement("h2", "h2-quiz-results", `Your Score: ${score}/10`)
     document.body.appendChild(h2)
