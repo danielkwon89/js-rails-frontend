@@ -52,12 +52,16 @@ function renderDifficultyHeader(){
 function renderDifficultyButtons(){
 
     let div = createCustomElement("div", "div-difficulty-buttons")
+    div.setAttribute("class", "text-center")
 
     let easyButton = createCustomElement("button", "button-easy", "Easy Quiz")
+    easyButton.setAttribute("class", "btn btn-success btn-lg")
 
     let mediumButton = createCustomElement("button", "button-medium", "Medium Quiz")
+    mediumButton.setAttribute("class", "btn btn-primary btn-lg")
 
     let hardButton = createCustomElement("button", "button-hard", "Hard Quiz")
+    hardButton.setAttribute("class", "btn btn-danger btn-lg")
 
     div.appendChild(easyButton) 
     div.appendChild(mediumButton)
@@ -94,21 +98,26 @@ function renderLoginForm(){
     let div = createCustomElement("div", "div-login")
 
     let form = createCustomElement("form", "form-login")
+    form.setAttribute("class", "text-center")
 
-    let label = createCustomElement("label", "label-login", "Login to Take Quiz")
+    let h4 = createCustomElement("h4", "h4-login", "Login to Take Quiz!")
 
-    let input = createCustomElement("input", "input-login")
+    let input = createCustomElement("input", "inputlg")
+    input.setAttribute("class", "form-control")
     input.setAttribute("placeholder", "username")
 
     let submit = createCustomElement("button", "submit-login", "Submit")
-    submit.setAttribute("type", "submit")
+    submit.setAttribute("type", "submit button")
+    //
+    submit.setAttribute("class", "btn btn-login btn-lg")
+    //
 
     let br1 = document.createElement("br")
     let br2 = document.createElement("br")
 
     document.body.appendChild(div)
     div.appendChild(form)
-    form.appendChild(label)
+    form.appendChild(h4)
     form.appendChild(br1)
     form.appendChild(input)
     form.appendChild(br2)
@@ -167,17 +176,12 @@ function findOrCreateUser(username){
 }
 
 function renderQuiz(quizObj){
-
-    //
-    console.log(quizObj)
-    //
   
     let difficultyButtons = document.getElementById("div-difficulty-buttons")
     difficultyButtons.remove()
     let quizABooHeader = document.getElementById("img-header")
     quizABooHeader.remove()
 
-    // render header based on difficulty
     renderDifficultyHeader()
 
     let div = createCustomElement("div", "div-quiz")
@@ -207,22 +211,28 @@ function renderQuiz(quizObj){
             input.setAttribute("name", quizObj.results.indexOf(questionObj))
             input.setAttribute("value", e)
 
-            let label = createCustomElement("label", "label-answer-choice", e)
+            let p = createCustomElement("p", "p-answer-choice", e)
 
             let br = document.createElement("br")
 
             ol.appendChild(input)
-            ol.appendChild(label)
+            ol.appendChild(p)
             ol.appendChild(br)
         })
         
         let br = document.createElement("br")
         ol.appendChild(br)
     })
+
+    let buttonDiv = createCustomElement("div", "div-button")
+    buttonDiv.setAttribute("class", "text-center")
     
     let submitButton = createCustomElement("button", "button-submit", "Submit")
     submitButton.setAttribute("type", "submit")
-    div.appendChild(submitButton)
+    submitButton.setAttribute("class", "btn btn-login btn-lg")
+
+    div.appendChild(buttonDiv)
+    buttonDiv.appendChild(submitButton)
 
     submitButton.addEventListener("click", (e) => {
         e.preventDefault()
@@ -357,8 +367,14 @@ function clearPage(){
 
 function renderRetakeQuizButton(){
 
+    let buttonDiv = createCustomElement("div", "div-button")
+    buttonDiv.setAttribute("class", "text-center")
+
     let retakeQuizButton = createCustomElement("button", "button-retake-quiz", "Retake Quiz")
-    document.body.appendChild(retakeQuizButton)
+    retakeQuizButton.setAttribute("class", "btn btn-login btn-lg")
+
+    document.body.appendChild(buttonDiv)
+    buttonDiv.appendChild(retakeQuizButton)
 
     retakeQuizButton.addEventListener("click", () => {
         clearPage()
