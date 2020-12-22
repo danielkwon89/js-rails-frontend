@@ -241,8 +241,9 @@ function renderQuiz(quizObj){
         
         for (let i = 0; i < quizObj.results.length; i++){
             document.getElementsByName(i).forEach(e => {
+
                 if (e.checked){
-                    submittedAnswers.push(e.value)
+                    submittedAnswers.push({name: `${e.name}`, value: `${e.value}`})
                 }
             })
         }
@@ -250,7 +251,8 @@ function renderQuiz(quizObj){
         let correctScore = 0
 
         submittedAnswers.forEach(e => {
-            if (e === actualAnswers[submittedAnswers.indexOf(e)]){
+
+            if (e.value === actualAnswers[e.name]){
                 correctScore += 1
             }
         })
