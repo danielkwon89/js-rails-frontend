@@ -279,7 +279,9 @@ function renderQuizResults(score){
     document.body.appendChild(thankYouForPlayingHeader)
 
     let h2 = createCustomElement("h2", "h2-quiz-results", `Your Score: ${score}/10`)
+    h2.setAttribute("class", "text-center")
     document.body.appendChild(h2)
+    document.body.appendChild(document.createElement("br"))
 
     fetch(scoresEndpoint, 
     {
@@ -293,29 +295,47 @@ function renderQuizResults(score){
 
 function renderLeaderboard(){
 
+    let divContainer = createCustomElement("div")
+    divContainer.setAttribute("class", "container")
+
+    let divRow = createCustomElement("div")
+    divRow.setAttribute("class", "row")
+
+    document.body.appendChild(divContainer)
+    divContainer.appendChild(divRow)
+
     let easyDiv = createCustomElement("div", "div-easy-leaderboard")
+    easyDiv.setAttribute("class", "col")
     let easyOl = createCustomElement("ol", "ol-easy-leaderboard")
-    let easyH3 = createCustomElement("h3", "h3-easy-leaderboard", "Easy Quiz Leaderboard:")
+    let easyImg = createCustomElement("img", "img-easy-leaderboard")
+    easyImg.setAttribute("src", "img/easy-leaderboard.png")
+    easyImg.setAttribute("class", "w-100")
     
-    easyDiv.appendChild(easyH3)
+    easyDiv.appendChild(easyImg)
     easyDiv.appendChild(easyOl)
-    document.body.appendChild(easyDiv)
+    divRow.appendChild(easyDiv)
 
     let mediumDiv = createCustomElement("div", "div-medium-leaderboard")
+    mediumDiv.setAttribute("class", "col")
     let mediumOl = createCustomElement("ol", "ol-medium-leaderboard")
-    let mediumH3 = createCustomElement("h3", "h3-medium-leaderboard", "Medium Quiz Leaderboard:")
+    let mediumImg = createCustomElement("img", "img-medium-leaderboard")
+    mediumImg.setAttribute("src", "img/medium-leaderboard.png")
+    mediumImg.setAttribute("class", "w-100")
 
-    mediumDiv.appendChild(mediumH3)
+    mediumDiv.appendChild(mediumImg)
     mediumDiv.appendChild(mediumOl)
-    document.body.appendChild(mediumDiv)
+    divRow.appendChild(mediumDiv)
     
     let hardDiv = createCustomElement("div", "div-hard-leaderboard")
+    hardDiv.setAttribute("class", "col")
     let hardOl = createCustomElement("ol", "ol-hard-leaderboard")
-    let hardH3 = createCustomElement("h3", "h3-hard-leaderboard", "Hard Quiz Leaderboard:")
+    let hardImg = createCustomElement("img", "img-hard-leaderboard")
+    hardImg.setAttribute("src", "img/hard-leaderboard.png")
+    hardImg.setAttribute("class", "w-100")
 
-    hardDiv.appendChild(hardH3)
+    hardDiv.appendChild(hardImg)
     hardDiv.appendChild(hardOl)
-    document.body.appendChild(hardDiv)
+    divRow.appendChild(hardDiv)
 
     let easyArr = []
     let mediumArr = []
