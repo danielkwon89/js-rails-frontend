@@ -23,30 +23,30 @@ function quizABooHeader(){
 }
 
 function renderDifficultyHeader(){
-    
-    // control flow grabbing difficulty level from sessionStorage.quizDifficulty then
-    // rendering the appropriate difficulty header
 
     let quizDifficulty = sessionStorage.quizDifficulty
     
     if (quizDifficulty === "easy"){
+
         let img = document.createElement("img")
         img.src = "img/easy-quiz.png"
         img.id = "img-header"
         document.body.appendChild(img)
+
     } else if (quizDifficulty === "medium"){
+
         let img = document.createElement("img")
         img.src = "img/medium-quiz.png"
         img.id = "img-header"
         document.body.appendChild(img)
+
     } else if (quizDifficulty === "hard"){
+
         let img = document.createElement("img")
         img.src = "img/difficult-quiz.png"
         img.id = "img-header"
         document.body.appendChild(img)
     }
-
-    // set background color to #fffcf2 (same as header background)
 }
 
 function renderDifficultyButtons(){
@@ -63,8 +63,10 @@ function renderDifficultyButtons(){
     let hardButton = createCustomElement("button", "button-hard", "Hard Quiz")
     hardButton.setAttribute("class", "btn btn-danger btn-lg")
 
-    div.appendChild(easyButton) 
+    div.appendChild(easyButton)
+    div.appendChild(document.createTextNode(" "))
     div.appendChild(mediumButton)
+    div.appendChild(document.createTextNode(" "))
     div.appendChild(hardButton)
 
     document.body.appendChild(div)
@@ -96,11 +98,18 @@ function renderLoginForm(){
     quizABooHeader()
 
     let div = createCustomElement("div", "div-login")
+    div.setAttribute("class", "form-group text-center")
 
     let form = createCustomElement("form", "form-login")
     form.setAttribute("class", "text-center")
 
     let h4 = createCustomElement("h4", "h4-login", "Login to Take Quiz!")
+
+    let divRow = createCustomElement("div")
+    divRow.setAttribute("class", "row justify-content-center")
+
+    let divCol = createCustomElement("div")
+    divCol.setAttribute("class", "col-md-4 text-center")
 
     let input = createCustomElement("input", "inputlg")
     input.setAttribute("class", "form-control")
@@ -108,19 +117,16 @@ function renderLoginForm(){
 
     let submit = createCustomElement("button", "submit-login", "Submit")
     submit.setAttribute("type", "submit button")
-    //
-    submit.setAttribute("class", "btn btn-login btn-lg")
-    //
-
-    let br1 = document.createElement("br")
-    let br2 = document.createElement("br")
+    submit.setAttribute("class", "btn btn-login btn-md")
 
     document.body.appendChild(div)
     div.appendChild(form)
     form.appendChild(h4)
-    form.appendChild(br1)
-    form.appendChild(input)
-    form.appendChild(br2)
+    // form.appendChild(document.createElement("br"))
+    form.appendChild(divRow)
+    divRow.appendChild(divCol)
+    divCol.appendChild(input)
+    // form.appendChild(document.createElement("br"))
     form.appendChild(submit)
 
     let formSubmitButton = document.getElementById("submit-login")
