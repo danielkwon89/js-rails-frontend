@@ -356,19 +356,19 @@ function renderLeaderboard(){
             
         })
 
-        easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
+        easyArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 15).forEach(e => {
             let easyList = document.getElementById("ol-easy-leaderboard")
             let li = createCustomElement("li", "li-easy-score", `${e.name}: ${e.score}/10`)
             easyList.appendChild(li)
         })
 
-        mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
+        mediumArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 15).forEach(e => {
             let mediumList = document.getElementById("ol-medium-leaderboard")
             let li = createCustomElement("li", "li-medium-score", `${e.name}: ${e.score}/10`)
             mediumList.appendChild(li)
         })
 
-        hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 25).forEach(e => {
+        hardArr.sort((a, b) => (a.score > b.score) ? -1 : 1).slice(0, 15).forEach(e => {
             let hardList = document.getElementById("ol-hard-leaderboard")
             let li = createCustomElement("li", "li-hard-score", `${e.name}: ${e.score}/10`)
             hardList.appendChild(li)
