@@ -2,8 +2,11 @@
 
 Quiz-A-Boo is a quiz app for anime enthusiasts to test their anime knowledge in varying difficulties. Only the highest scores make the leaderboard!
 
-This app was created using a JS front-end and a Rails backend. The backend repo can be found here: 
+This app was created using a JavaScript frontend and a Rails backend. The backend repo can be found here:
+
 https://github.com/danielkwon89/js-rails-backend
+
+# Instructions
 
 Here are the steps to get the app up and running:
 
