@@ -1,4 +1,4 @@
-# Rails back-end repo URL: https://github.com/danielkwon89/js-rails-backend
+Rails back-end repo URL: https://github.com/danielkwon89/js-rails-backend
 
 # Welcome to the Quiz-A-Boo app!
 
