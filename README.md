@@ -6,6 +6,8 @@ This app was created using a JavaScript frontend and a Rails backend. The backen
 
 https://github.com/danielkwon89/js-rails-backend
 
+The app utilizes an external API for quiz questions and answers and persists usernames/scores in the Rails backend.
+
 # Instructions
 
 Here are the steps to get the app up and running:
