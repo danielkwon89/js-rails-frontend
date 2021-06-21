@@ -35,6 +35,4 @@ Here are the steps to get the app up and running:
      
 7. Last step! Right click the index.html file and open it in your browser to take the quizzes. Enjoy!
 
-<video width="320" height="240" controls>
-  <source src="https://github.com/danielkwon89/js-rails-frontend/blob/7c2b3a905530252a6eac3a92c9e13aa0d78bb160/Quiz-A-Boo%20GIF.mp4" type="video/mp4">
-</video>
+![][https://github.com/danielkwon89/js-rails-frontend/blob/1420fc178d7a37226b80ca9d43b566292a2a845f/quiz-a-boo%20gif.gif]
