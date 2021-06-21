@@ -35,4 +35,4 @@ Here are the steps to get the app up and running:
      
 7. Last step! Right click the index.html file and open it in your browser to take the quizzes. Enjoy!
 
- ![Quiz-A-Boo GIF](Quiz-A-Boo GIF.mp4)
+![Quiz-A-Boo GIF](Quiz-A-Boo GIF.mp4)
