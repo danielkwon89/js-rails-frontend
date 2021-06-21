@@ -27,7 +27,7 @@ Here are the steps to get the app up and running:
 
        rails s
        
-5. Almost done. Now we just need to clone our JS frontend. Open up a new terminal and run the following:
+5. Almost done! Now we just need to clone our JS frontend. Open up a new terminal and run the following:
 
        git clone https://github.com/danielkwon89/js-rails-frontend.git
       
