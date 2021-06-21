@@ -1,5 +1,3 @@
-Rails back-end repo URL: https://github.com/danielkwon89/js-rails-backend
-
 # Welcome to the Quiz-A-Boo app!
 
 Quiz-A-Boo is a quiz app for anime enthusiasts to test their anime knowledge in varying difficulties. Only the highest scores make the leaderboard!
